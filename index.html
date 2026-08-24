@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Un saluto a Pasquale — IIS Gregorio Mendel</title>
-<meta name="description" content="Un saluto e un ringraziamento a Pasquale, per anni preside e amico del Mendel, che dal 1° settembre inizia una nuova avventura.">
+<meta name="description" content="Un saluto e un ringraziamento a Pasquale, per anni docente e amico del Mendel, che dalla prossima settimana diventa Preside altrove.">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { theme: { extend: {
@@ -22,8 +22,15 @@ body{font-family:'Inter',system-ui,sans-serif;}
 
 #backToTop{position:fixed;bottom:24px;right:24px;z-index:50;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;}
 #backToTop.show{opacity:1;pointer-events:auto;}
-#musicToggle{position:fixed;bottom:24px;left:24px;z-index:50;background:#1b5e20;color:#fff;border:none;width:48px;height:48px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;opacity:1;transition:opacity .3s ease,transform .2s ease;}
+#musicPanel{position:fixed;bottom:24px;left:24px;z-index:50;}
+#musicToggle{background:#1b5e20;color:#fff;border:none;width:48px;height:48px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;opacity:1;transition:opacity .3s ease,transform .2s ease;}
 #musicToggle:hover{transform:scale(1.08);}
+#musicMenu{position:absolute;bottom:58px;left:0;background:#123c16;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.4);min-width:240px;display:flex;flex-direction:column;gap:6px;}
+#musicMenu.hidden{display:none;}
+.music-menu-title{color:rgba(255,255,255,.6);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 6px 4px;}
+.track-btn{background:transparent;border:1px solid transparent;color:#e8f5e9;font-size:.82rem;text-align:left;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .15s;}
+.track-btn:hover{background:rgba(255,255,255,.08);}
+.track-btn.active{background:rgba(76,175,80,.25);border-color:rgba(76,175,80,.5);font-weight:700;}
 
 .crawl-stage{
   position:relative;
@@ -133,7 +140,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
         <p>(Sì, avete letto bene: colui che per anni ci ha insegnato l'Estimo... ora dovrà stimare pure i grattacapi di tutti gli altri.)</p>
         <p>Ma bando alle epopee — torniamo coi piedi per terra, che è quello che Pasquale ci ha sempre insegnato a fare.</p>
         <p>Perché Pasquale non è solo un ottimo insegnante: è quello che ti risolve un problema con un sorriso e una battuta, anche quando il problema sei tu.</p>
-        <p>È quello che, se lo cerchi, un consiglio o un abbraccio (metaforico, è pur sempre un preside) te lo trova sempre.</p>
+        <p>È quello che, se lo cerchi, un consiglio o un abbraccio (metaforico, tra poco sarà un preside) te lo trova sempre.</p>
         <p>È fiero della sua Castellammare come pochi, si emoziona ancora per un assolo di sax, e sciogliersi lo vedi solo quando parla di due persone: sua moglie Nicoletta e suo figlio Claudio — simpatico e sveglio come il padre, e forse anche di più.</p>
         <p>Lascia un vuoto nei corridoi, nelle riunioni interminabili rese sopportabili solo dalle sue battute, nei caffè al volo tra un'ora e l'altra.</p>
         <p>Ma quello che lascia davvero, quello resta: il ricordo di un collega diventato amico, e la certezza che ovunque vada, porterà la stessa umanità che ha regalato a noi.</p>
@@ -234,7 +241,17 @@ body{font-family:'Inter',system-ui,sans-serif;}
 <audio id="bgMusic" loop preload="none">
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
-<button id="musicToggle" onclick="toggleMusic()" aria-label="Musica di sottofondo">🔇</button>
+
+<div id="musicPanel">
+  <button id="musicToggle" onclick="toggleMusic()" aria-label="Musica di sottofondo">🔇</button>
+  <div id="musicMenu" class="hidden">
+    <div class="music-menu-title">Scegli la musica</div>
+    <button onclick="selectTrack('musica.mp3', this)" class="track-btn active">🎤 Pasquà, 'o Preside (gospel-blues)</button>
+    <button onclick="selectTrack('pasquale-remastered.mp3', this)" class="track-btn">🎤 Pasquà, 'o Preside (trap)</button>
+    <button onclick="selectTrack('blue-in-the-rain.mp3', this)" class="track-btn">🎷 Blue in the Rain (jazz)</button>
+    <button onclick="selectTrack('midnight-groove.mp3', this)" class="track-btn">🎹 Midnight Groove (fusion)</button>
+  </div>
+</div>
 
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su" class="bg-mendel-700 hover:bg-mendel-800 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold">↑</button>
 <script>
@@ -242,17 +259,31 @@ window.addEventListener('scroll', () => {
   document.getElementById('backToTop').classList.toggle('show', window.scrollY > 400);
 });
 
-/* --- Musica di sottofondo --- */
+/* --- Musica di sottofondo (con playlist selezionabile) --- */
 const bgMusic = document.getElementById('bgMusic');
 const musicBtn = document.getElementById('musicToggle');
+const musicMenu = document.getElementById('musicMenu');
 const mainVideo = document.getElementById('mainVideo');
 let musicStarted = false;
+let currentTrack = 'musica.mp3';
+
 function toggleMusic(){
-  if(bgMusic.paused){
-    bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; }).catch(()=>{});
-  } else {
-    bgMusic.pause();
-    musicBtn.textContent = '🔇';
+  musicMenu.classList.toggle('hidden');
+}
+function selectTrack(src, btnEl){
+  document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  if(currentTrack === src){
+    if(bgMusic.paused){ bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; }); }
+    else { bgMusic.pause(); musicBtn.textContent = '🔇'; }
+    return;
+  }
+  currentTrack = src;
+  const wasPlaying = !bgMusic.paused;
+  bgMusic.querySelector('source').src = src;
+  bgMusic.load();
+  if(wasPlaying || musicStarted){
+    bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; }).catch(()=>{ musicBtn.textContent = '🔇'; });
   }
 }
 mainVideo.addEventListener('ended', () => {
