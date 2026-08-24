@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un saluto a Pasquale — IIS Gregorio Mendel</title>
+<meta name="description" content="Un saluto e un ringraziamento a Pasquale, per anni preside e amico del Mendel, che dal 1° settembre inizia una nuova avventura.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { mendel: {
+    50:'#e8f5e9',100:'#c8e6c9',200:'#a5d6a7',300:'#81c784',400:'#4caf50',
+    500:'#43a047',600:'#388e3c',700:'#2e7d32',800:'#1b5e20',900:'#123c16'
+  } },
+  fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+} } }
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+body{font-family:'Inter',system-ui,sans-serif;}
+:focus-visible{outline:3px solid #4caf50;outline-offset:2px;}
+
+#backToTop{position:fixed;bottom:24px;right:24px;z-index:50;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;}
+#backToTop.show{opacity:1;pointer-events:auto;}
+
+.crawl-stage{
+  position:relative;
+  background:#000 radial-gradient(ellipse at 50% 15%, #06170a 0%, #000 70%);
+  overflow:hidden;
+  height:100vh;
+}
+.stars, .stars2{
+  position:absolute;inset:0;
+  background-repeat:repeat;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 120px, #fff, transparent),
+    radial-gradient(1px 1px at 150px 60px, #fff, transparent),
+    radial-gradient(2px 2px at 220px 180px, #fff, transparent),
+    radial-gradient(1px 1px at 300px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 40px 200px, #fff, transparent),
+    radial-gradient(2px 2px at 260px 100px, #fff, transparent);
+  background-size:320px 220px;
+  opacity:.7;
+  animation:drift 60s linear infinite;
+}
+.stars2{background-size:400px 300px;opacity:.4;animation-duration:100s;animation-direction:reverse;}
+@keyframes drift{from{background-position:0 0;}to{background-position:1000px 1000px;}}
+
+.crawl-fade-top{position:absolute;top:0;left:0;right:0;height:20%;background:linear-gradient(to bottom,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
+.crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:10%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
+
+.crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:500px;perspective-origin:50% 100%;z-index:2;}
+.crawl-track{position:relative;width:min(70vw,860px);transform-style:preserve-3d;transform:rotateX(25deg);}
+.crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 340s linear infinite;}
+@keyframes crawlUp{0%{transform:translateY(65vh);}100%{transform:translateY(-3300vh);}}
+.crawl-photo{width:min(78vw,720px);border-radius:10px;border:3px solid rgba(76,175,80,.55);box-shadow:0 0 40px rgba(76,175,80,.25);display:block;}
+
+.crawl-heading{position:absolute;top:7%;left:0;right:0;z-index:4;text-align:center;color:#4caf50;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.95rem;text-shadow:0 0 14px rgba(76,175,80,.7);}
+
+/* --- text crawl (Guerre Stellari, giallo) --- */
+.text-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;}
+.text-crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:450px;perspective-origin:50% 100%;z-index:2;}
+.text-crawl-track{position:relative;width:min(70vw,780px);transform-style:preserve-3d;transform:rotateX(25deg);}
+.text-crawl-body{display:flex;flex-direction:column;align-items:center;gap:2.2rem;animation:textCrawlUp 220s linear infinite;color:#ffd60a;text-align:center;font-weight:700;}
+.text-crawl-body p{font-size:1.6rem;line-height:1.6;text-shadow:0 0 10px rgba(255,214,10,.35);max-width:680px;}
+.text-crawl-body p.lead-line{font-size:2rem;}
+@keyframes textCrawlUp{0%{transform:translateY(70vh);}100%{transform:translateY(-1500vh);}}
+.text-crawl-fade-top{position:absolute;top:0;left:0;right:0;height:22%;background:linear-gradient(to bottom,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
+.text-crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:8%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
+#textCrawlControls{position:absolute;bottom:5%;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:10px;}
+#textCrawlControls button{background:rgba(255,214,10,.12);border:1px solid rgba(255,214,10,.5);color:#ffe066;font-size:.75rem;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s;}
+#textCrawlControls button:hover{background:rgba(255,214,10,.25);color:#fff;}
+#hyperTextCanvas, #hyperPhotoCanvas{position:absolute;inset:0;z-index:1;display:block;}
+@media (prefers-reduced-motion: reduce){
+  .text-crawl-body{animation:none;position:static;padding:10vh 4vw;}
+  .text-crawl-track{transform:none;}
+  #hyperTextCanvas, #hyperPhotoCanvas{display:none;}
+}
+
+#crawlControls{position:absolute;bottom:5%;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:10px;}
+#crawlControls button{background:rgba(76,175,80,.15);border:1px solid rgba(76,175,80,.5);color:#a5d6a7;font-size:.75rem;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s;}
+#crawlControls button:hover{background:rgba(76,175,80,.3);color:#fff;}
+
+@media (prefers-reduced-motion: reduce){
+  .crawl-photos{animation:none;position:static;display:grid;gap:32px;padding:10vh 0;}
+  .crawl-track{transform:none;}
+  .stars,.stars2{animation:none;}
+}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+<header class="bg-gradient-to-br from-mendel-800 to-mendel-900 text-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center gap-4">
+      <img src="logo-mendel.png" alt="Logo IIS Gregorio Mendel" class="w-14 h-14 rounded-full bg-white p-0.5 shrink-0 object-contain"
+        onerror="this.outerHTML='&lt;div class=&quot;w-14 h-14 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-black text-lg shrink-0&quot;&gt;GM&lt;/div&gt;'">
+      <div>
+        <div class="text-[11px] uppercase tracking-widest text-white/80 font-semibold">IIS Gregorio Mendel · Villa Cortese (MI)</div>
+        <h1 class="text-xl sm:text-2xl font-bold leading-tight">Un saluto a Pasquale</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="bg-black py-10 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="aspect-video w-full rounded-xl overflow-hidden shadow-2xl border border-white/10">
+      <video class="w-full h-full" controls playsinline>
+        <source src="video.mp4" type="video/mp4">
+        Il tuo browser non supporta la riproduzione video.
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="text-crawl-stage" id="textCrawlStage">
+  <canvas id="hyperTextCanvas"></canvas>
+  <div class="text-crawl-viewport">
+    <div class="text-crawl-track">
+      <div class="text-crawl-body" id="textCrawlBody">
+        <p class="lead-line">In una scuola lontana lontana,<br>in quel di Villa Cortese...</p>
+        <p>...un fiero stabiese approdò tra i banchi del Mendel, portando con sé PV, Estimo, e un amore sconfinato per il jazz.</p>
+        <p>Il suo nome: Pasquale Donnarumma.</p>
+        <p>Dal 1° settembre la Forza lo chiama altrove: non più cattedra, ma scrivania da Preside.</p>
+        <p>(Sì, avete letto bene: colui che per anni ci ha insegnato l'Estimo... ora dovrà stimare pure i grattacapi di tutti gli altri.)</p>
+        <p>Ma bando alle epopee — torniamo coi piedi per terra, che è quello che Pasquale ci ha sempre insegnato a fare.</p>
+        <p>Perché Pasquale non è solo un ottimo insegnante: è quello che ti risolve un problema con un sorriso e una battuta, anche quando il problema sei tu.</p>
+        <p>È quello che, se lo cerchi, un consiglio o un abbraccio (metaforico, è pur sempre un preside) te lo trova sempre.</p>
+        <p>È fiero della sua Castellammare come pochi, si emoziona ancora per un assolo di sax, e sciogliersi lo vedi solo quando parla di due persone: sua moglie Nicoletta e suo figlio Claudio — simpatico e sveglio come il padre, e forse anche di più.</p>
+        <p>Lascia un vuoto nei corridoi, nelle riunioni interminabili rese sopportabili solo dalle sue battute, nei caffè al volo tra un'ora e l'altra.</p>
+        <p>Ma quello che lascia davvero, quello resta: il ricordo di un collega diventato amico, e la certezza che ovunque vada, porterà la stessa umanità che ha regalato a noi.</p>
+        <p class="lead-line">Buona strada, Pasquale.<br>Buona strada, Preside.</p>
+        <p>Che la Forza — e Castellammare — siano sempre con te.</p>
+        <p style="margin-top:1rem;font-size:1.15rem;letter-spacing:.05em;">Alberto, Anna Lisa, Emanuela, Giorgio,<br>Giuliana, Max, Paola, Salvatore</p>
+      </div>
+    </div>
+  </div>
+  <div class="text-crawl-fade-top"></div>
+  <div class="text-crawl-fade-bottom"></div>
+  <div id="textCrawlControls">
+    <button onclick="toggleTextCrawl()" id="textPauseBtn">⏸ Pausa</button>
+    <button onclick="setTextSpeed(220)">Normale</button>
+    <button onclick="setTextSpeed(100)">Veloce</button>
+  </div>
+</section>
+
+<section class="crawl-stage" id="crawlStage">
+  <canvas id="hyperPhotoCanvas"></canvas>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="crawl-heading">Tanti anni, tanti ricordi</div>
+  <div class="crawl-viewport">
+    <div class="crawl-track">
+      <div class="crawl-photos" id="crawlPhotos">
+        <figure><img class="crawl-photo" src="1.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="2.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="3.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="4.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="5.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="6.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="7.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="8.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="9.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="10.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><video class="crawl-photo" src="30.mp4" autoplay muted loop playsinline></video></figure>
+        <figure><img class="crawl-photo" src="11.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="12.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="13.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="14.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="15.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="16.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="17.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="18.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="19.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="20.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><video class="crawl-photo" src="31.mp4" autoplay muted loop playsinline></video></figure>
+        <figure><img class="crawl-photo" src="21.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="22.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="23.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="24.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="25.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="26.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="27.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="28.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="29.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="31.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="32.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+      </div>
+    </div>
+  </div>
+  <div class="crawl-fade-top"></div>
+  <div class="crawl-fade-bottom"></div>
+  <div id="crawlControls">
+    <button onclick="toggleCrawl()" id="pauseBtn">⏸ Pausa</button>
+    <button onclick="setSpeed(340)">Normale</button>
+    <button onclick="setSpeed(160)">Veloce</button>
+  </div>
+</section>
+
+<footer class="bg-mendel-900 text-white/80">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col md:flex-row justify-between gap-6 items-start">
+      <div>
+        <div class="font-bold text-white text-base mb-1">Istituto di Istruzione Superiore &quot;Gregorio Mendel&quot;</div>
+        <div class="text-sm">Via Ferrazzi, 15 — 20035 Villa Cortese (MI)</div>
+        <a href="https://agrariomendel.edu.it/" class="text-sm text-mendel-300 hover:underline inline-flex items-center gap-1 mt-2">agrariomendel.edu.it</a>
+      </div>
+      <div class="text-xs text-white/60 md:text-right">Pagina creata da Team Digitale<br>per l'IIS Mendel di Villa Cortese (MI)</div>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su" class="bg-mendel-700 hover:bg-mendel-800 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold">↑</button>
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('backToTop').classList.toggle('show', window.scrollY > 400);
+});
+
+let running = true;
+function toggleCrawl(){
+  const el = document.getElementById('crawlPhotos');
+  const btn = document.getElementById('pauseBtn');
+  running = !running;
+  el.style.animationPlayState = running ? 'running' : 'paused';
+  btn.textContent = running ? '⏸ Pausa' : '▶ Riprendi';
+}
+function setSpeed(sec){
+  document.getElementById('crawlPhotos').style.animationDuration = sec + 's';
+}
+
+let textRunning = true;
+function toggleTextCrawl(){
+  const el = document.getElementById('textCrawlBody');
+  const btn = document.getElementById('textPauseBtn');
+  textRunning = !textRunning;
+  el.style.animationPlayState = textRunning ? 'running' : 'paused';
+  btn.textContent = textRunning ? '⏸ Pausa' : '▶ Riprendi';
+}
+function setTextSpeed(sec){
+  document.getElementById('textCrawlBody').style.animationDuration = sec + 's';
+}
+
+/* --- Effetto iperspazio (stelle che sfrecciano verso lo spettatore) --- */
+function initHyperspace(canvasId, starColor){
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, cx, cy;
+  let stars = [];
+  const STAR_COUNT = 400;
+
+  function resize(){
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+    cx = w/2; cy = h/2;
+  }
+  function makeStar(){
+    return {
+      x: (Math.random()-0.5) * w,
+      y: (Math.random()-0.5) * h,
+      z: Math.random() * w,
+      pz: 0
+    };
+  }
+  function init(){
+    resize();
+    stars = [];
+    for(let i=0;i<STAR_COUNT;i++){ const s = makeStar(); s.z = Math.random()*w; s.pz = s.z; stars.push(s); }
+  }
+  function frame(){
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle = starColor;
+    ctx.lineWidth = 1.5;
+    for(let s of stars){
+      s.pz = s.z;
+      s.z -= 9;
+      if(s.z < 1){
+        s.x = (Math.random()-0.5) * w;
+        s.y = (Math.random()-0.5) * h;
+        s.z = w;
+        s.pz = s.z;
+      }
+      const sx = (s.x / s.z) * w + cx;
+      const sy = (s.y / s.z) * w + cy;
+      const px = (s.x / s.pz) * w + cx;
+      const py = (s.y / s.pz) * w + cy;
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(sx, sy);
+      ctx.stroke();
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener('resize', resize);
+  init();
+  requestAnimationFrame(frame);
+}
+
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  initHyperspace('hyperTextCanvas', 'rgba(255,214,10,0.55)');
+  initHyperspace('hyperPhotoCanvas', 'rgba(200,255,200,0.55)');
+}
+</script>
+
+</body>
+</html>
