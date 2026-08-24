@@ -22,6 +22,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
 
 #backToTop{position:fixed;bottom:24px;right:24px;z-index:50;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;}
 #backToTop.show{opacity:1;pointer-events:auto;}
+#musicToggle{position:fixed;bottom:24px;left:24px;z-index:50;background:#1b5e20;color:#fff;border:none;width:48px;height:48px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+#musicToggle.show{opacity:1;pointer-events:auto;}
 
 .crawl-stage{
   position:relative;
@@ -52,8 +54,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
 
 .crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:500px;perspective-origin:50% 100%;z-index:2;}
 .crawl-track{position:relative;width:min(70vw,860px);transform-style:preserve-3d;transform:rotateX(25deg);}
-.crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 340s linear infinite;}
-@keyframes crawlUp{0%{transform:translateY(65vh);}100%{transform:translateY(-3300vh);}}
+.crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 480s linear infinite;will-change:transform;animation-play-state:paused;}
+@keyframes crawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-3300vh);}}
 .crawl-photo{width:min(78vw,720px);border-radius:10px;border:3px solid rgba(76,175,80,.55);box-shadow:0 0 40px rgba(76,175,80,.25);display:block;}
 
 .crawl-heading{position:absolute;top:7%;left:0;right:0;z-index:4;text-align:center;color:#4caf50;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.95rem;text-shadow:0 0 14px rgba(76,175,80,.7);}
@@ -62,16 +64,16 @@ body{font-family:'Inter',system-ui,sans-serif;}
 .text-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;}
 .text-crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:450px;perspective-origin:50% 100%;z-index:2;}
 .text-crawl-track{position:relative;width:min(70vw,780px);transform-style:preserve-3d;transform:rotateX(25deg);}
-.text-crawl-body{display:flex;flex-direction:column;align-items:center;gap:2.2rem;animation:textCrawlUp 220s linear infinite;color:#ffd60a;text-align:center;font-weight:700;}
-.text-crawl-body p{font-size:1.6rem;line-height:1.6;text-shadow:0 0 10px rgba(255,214,10,.35);max-width:680px;}
-.text-crawl-body p.lead-line{font-size:2rem;}
-@keyframes textCrawlUp{0%{transform:translateY(70vh);}100%{transform:translateY(-1500vh);}}
+.text-crawl-body{display:flex;flex-direction:column;align-items:center;gap:2.2rem;animation:textCrawlUp 220s linear infinite;color:#ffd60a;text-align:center;font-weight:700;will-change:transform;animation-play-state:paused;}
+.text-crawl-body p{font-size:2.1rem;line-height:1.65;text-shadow:0 0 10px rgba(255,214,10,.35);max-width:760px;}
+.text-crawl-body p.lead-line{font-size:2.7rem;}
+@keyframes textCrawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-1500vh);}}
 .text-crawl-fade-top{position:absolute;top:0;left:0;right:0;height:22%;background:linear-gradient(to bottom,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
 .text-crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:8%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
 #textCrawlControls{position:absolute;bottom:5%;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:10px;}
 #textCrawlControls button{background:rgba(255,214,10,.12);border:1px solid rgba(255,214,10,.5);color:#ffe066;font-size:.75rem;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s;}
 #textCrawlControls button:hover{background:rgba(255,214,10,.25);color:#fff;}
-#hyperTextCanvas, #hyperPhotoCanvas{position:absolute;inset:0;z-index:1;display:block;}
+#hyperTextCanvas, #hyperPhotoCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block;}
 @media (prefers-reduced-motion: reduce){
   .text-crawl-body{animation:none;position:static;padding:10vh 4vw;}
   .text-crawl-track{transform:none;}
@@ -107,7 +109,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
 <section class="bg-black py-10 px-4">
   <div class="max-w-4xl mx-auto">
     <div class="aspect-video w-full rounded-xl overflow-hidden shadow-2xl border border-white/10">
-      <video class="w-full h-full" controls playsinline>
+      <video class="w-full h-full" id="mainVideo" controls playsinline>
         <source src="video.mp4" type="video/mp4">
         Il tuo browser non supporta la riproduzione video.
       </video>
@@ -194,8 +196,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
   <div class="crawl-fade-bottom"></div>
   <div id="crawlControls">
     <button onclick="toggleCrawl()" id="pauseBtn">⏸ Pausa</button>
-    <button onclick="setSpeed(340)">Normale</button>
-    <button onclick="setSpeed(160)">Veloce</button>
+    <button onclick="setSpeed(480)">Normale</button>
+    <button onclick="setSpeed(220)">Veloce</button>
   </div>
 </section>
 
@@ -212,13 +214,44 @@ body{font-family:'Inter',system-ui,sans-serif;}
   </div>
 </footer>
 
+<audio id="bgMusic" loop preload="none">
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+<button id="musicToggle" onclick="toggleMusic()" aria-label="Musica di sottofondo">🔇</button>
+
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su" class="bg-mendel-700 hover:bg-mendel-800 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold">↑</button>
 <script>
 window.addEventListener('scroll', () => {
   document.getElementById('backToTop').classList.toggle('show', window.scrollY > 400);
 });
 
-let running = true;
+/* --- Musica di sottofondo --- */
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicToggle');
+const mainVideo = document.getElementById('mainVideo');
+let musicStarted = false;
+
+function showMusicButton(){
+  musicBtn.classList.add('show');
+}
+function toggleMusic(){
+  if(bgMusic.paused){
+    bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; }).catch(()=>{});
+  } else {
+    bgMusic.pause();
+    musicBtn.textContent = '🔇';
+  }
+}
+mainVideo.addEventListener('ended', () => {
+  showMusicButton();
+  if(!musicStarted){
+    musicStarted = true;
+    bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; }).catch(()=>{ musicBtn.textContent = '🔇'; });
+  }
+});
+mainVideo.addEventListener('play', showMusicButton);
+
+let running = false;
 function toggleCrawl(){
   const el = document.getElementById('crawlPhotos');
   const btn = document.getElementById('pauseBtn');
@@ -230,7 +263,7 @@ function setSpeed(sec){
   document.getElementById('crawlPhotos').style.animationDuration = sec + 's';
 }
 
-let textRunning = true;
+let textRunning = false;
 function toggleTextCrawl(){
   const el = document.getElementById('textCrawlBody');
   const btn = document.getElementById('textPauseBtn');
@@ -242,6 +275,30 @@ function setTextSpeed(sec){
   document.getElementById('textCrawlBody').style.animationDuration = sec + 's';
 }
 
+/* --- Avvia i crawl solo quando lo spettatore ci arriva scorrendo --- */
+const textCrawlObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting && !textRunning){
+      textRunning = true;
+      document.getElementById('textCrawlBody').style.animationPlayState = 'running';
+      textCrawlObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.35 });
+textCrawlObserver.observe(document.getElementById('textCrawlStage'));
+
+const photoCrawlObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting && !running){
+      running = true;
+      document.getElementById('crawlPhotos').style.animationPlayState = 'running';
+      document.getElementById('pauseBtn').textContent = '⏸ Pausa';
+      photoCrawlObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.35 });
+photoCrawlObserver.observe(document.getElementById('crawlStage'));
+
 /* --- Effetto iperspazio (stelle che sfrecciano verso lo spettatore) --- */
 function initHyperspace(canvasId, starColor){
   const canvas = document.getElementById(canvasId);
@@ -249,27 +306,26 @@ function initHyperspace(canvasId, starColor){
   const ctx = canvas.getContext('2d');
   let w, h, cx, cy;
   let stars = [];
-  const STAR_COUNT = 400;
+  const STAR_COUNT = 500;
 
   function resize(){
-    w = canvas.width = canvas.offsetWidth;
-    h = canvas.height = canvas.offsetHeight;
+    const rect = canvas.parentElement.getBoundingClientRect();
+    w = canvas.width = Math.max(1, Math.round(rect.width));
+    h = canvas.height = Math.max(1, Math.round(rect.height));
     cx = w/2; cy = h/2;
   }
   function makeStar(){
-    return {
-      x: (Math.random()-0.5) * w,
-      y: (Math.random()-0.5) * h,
-      z: Math.random() * w,
-      pz: 0
-    };
+    return { x:(Math.random()-0.5)*w, y:(Math.random()-0.5)*h, z: Math.random()*w, pz:0 };
   }
   function init(){
     resize();
     stars = [];
-    for(let i=0;i<STAR_COUNT;i++){ const s = makeStar(); s.z = Math.random()*w; s.pz = s.z; stars.push(s); }
+    for(let i=0;i<STAR_COUNT;i++){ const s = makeStar(); s.pz = s.z; stars.push(s); }
   }
   function frame(){
+    if(canvas.parentElement.getBoundingClientRect().width !== w || canvas.parentElement.getBoundingClientRect().height !== h){
+      resize();
+    }
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
     ctx.fillRect(0,0,w,h);
     ctx.strokeStyle = starColor;
@@ -295,7 +351,7 @@ function initHyperspace(canvasId, starColor){
     requestAnimationFrame(frame);
   }
   window.addEventListener('resize', resize);
-  init();
+  setTimeout(init, 50);
   requestAnimationFrame(frame);
 }
 
