@@ -51,8 +51,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
 .crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:10%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
 
 .crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:500px;perspective-origin:50% 100%;z-index:2;}
-.crawl-track{position:relative;width:min(70vw,860px);transform-style:preserve-3d;transform:rotateX(42deg);}
-.crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 260s linear infinite;}
+.crawl-track{position:relative;width:min(70vw,860px);transform-style:preserve-3d;transform:rotateX(25deg);}
+.crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 340s linear infinite;}
 @keyframes crawlUp{0%{transform:translateY(65vh);}100%{transform:translateY(-3300vh);}}
 .crawl-photo{width:min(78vw,720px);border-radius:10px;border:3px solid rgba(76,175,80,.55);box-shadow:0 0 40px rgba(76,175,80,.25);display:block;}
 
@@ -61,8 +61,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
 /* --- text crawl (Guerre Stellari, giallo) --- */
 .text-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;}
 .text-crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:450px;perspective-origin:50% 100%;z-index:2;}
-.text-crawl-track{position:relative;width:min(70vw,780px);transform-style:preserve-3d;transform:rotateX(40deg);}
-.text-crawl-body{display:flex;flex-direction:column;align-items:center;gap:2.2rem;animation:textCrawlUp 150s linear infinite;color:#ffd60a;text-align:center;font-weight:700;}
+.text-crawl-track{position:relative;width:min(70vw,780px);transform-style:preserve-3d;transform:rotateX(25deg);}
+.text-crawl-body{display:flex;flex-direction:column;align-items:center;gap:2.2rem;animation:textCrawlUp 220s linear infinite;color:#ffd60a;text-align:center;font-weight:700;}
 .text-crawl-body p{font-size:1.6rem;line-height:1.6;text-shadow:0 0 10px rgba(255,214,10,.35);max-width:680px;}
 .text-crawl-body p.lead-line{font-size:2rem;}
 @keyframes textCrawlUp{0%{transform:translateY(70vh);}100%{transform:translateY(-1500vh);}}
@@ -71,9 +71,11 @@ body{font-family:'Inter',system-ui,sans-serif;}
 #textCrawlControls{position:absolute;bottom:5%;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:10px;}
 #textCrawlControls button{background:rgba(255,214,10,.12);border:1px solid rgba(255,214,10,.5);color:#ffe066;font-size:.75rem;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s;}
 #textCrawlControls button:hover{background:rgba(255,214,10,.25);color:#fff;}
+#hyperTextCanvas, #hyperPhotoCanvas{position:absolute;inset:0;z-index:1;display:block;}
 @media (prefers-reduced-motion: reduce){
   .text-crawl-body{animation:none;position:static;padding:10vh 4vw;}
   .text-crawl-track{transform:none;}
+  #hyperTextCanvas, #hyperPhotoCanvas{display:none;}
 }
 
 #crawlControls{position:absolute;bottom:5%;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:10px;}
@@ -106,7 +108,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
   <div class="max-w-4xl mx-auto">
     <div class="aspect-video w-full rounded-xl overflow-hidden shadow-2xl border border-white/10">
       <video class="w-full h-full" controls playsinline>
-        <source src="video-pasquale.mp4" type="video/mp4">
+        <source src="video.mp4" type="video/mp4">
         Il tuo browser non supporta la riproduzione video.
       </video>
     </div>
@@ -114,18 +116,24 @@ body{font-family:'Inter',system-ui,sans-serif;}
 </section>
 
 <section class="text-crawl-stage" id="textCrawlStage">
+  <canvas id="hyperTextCanvas"></canvas>
   <div class="text-crawl-viewport">
     <div class="text-crawl-track">
       <div class="text-crawl-body" id="textCrawlBody">
         <p class="lead-line">In una scuola lontana lontana,<br>in quel di Villa Cortese...</p>
-        <p>Dal 1° settembre Pasquale lascia il Mendel per iniziare la sua nuova avventura da Preside altrove.</p>
-        <p>Un traguardo che gli auguriamo di cuore, ma anche un distacco che si sente, perché in questi anni Pasquale non è stato solo un ottimo insegnante e un punto di riferimento: è stato una persona su cui tutti, davvero tutti, abbiamo potuto contare.</p>
-        <p>Chi lo ha avuto come collega sa quanto la sua porta — e il suo sorriso — siano sempre stati aperti.</p>
-        <p>Chi lo ha avuto come punto di riferimento sa quanta serenità sappia portare anche nei momenti più complicati.</p>
-        <p>Lascia un vuoto che si farà sentire nei corridoi, nelle riunioni, nelle chiacchierate al volo tra un'ora e l'altra.</p>
-        <p>Ma lascia anche qualcosa che resta: il ricordo di questi anni insieme, e la certezza che, ovunque andrà, porterà con sé lo stesso entusiasmo e la stessa umanità che ha regalato a noi.</p>
-        <p class="lead-line">Grazie di tutto, Pasquale.<br>In bocca al lupo per questo nuovo capitolo.</p>
-        <p>Da qui, ti seguiremo sempre con affetto.</p>
+        <p>...un fiero stabiese approdò tra i banchi del Mendel, portando con sé PV, Estimo, e un amore sconfinato per il jazz.</p>
+        <p>Il suo nome: Pasquale Donnarumma.</p>
+        <p>Dal 1° settembre la Forza lo chiama altrove: non più cattedra, ma scrivania da Preside.</p>
+        <p>(Sì, avete letto bene: colui che per anni ci ha insegnato l'Estimo... ora dovrà stimare pure i grattacapi di tutti gli altri.)</p>
+        <p>Ma bando alle epopee — torniamo coi piedi per terra, che è quello che Pasquale ci ha sempre insegnato a fare.</p>
+        <p>Perché Pasquale non è solo un ottimo insegnante: è quello che ti risolve un problema con un sorriso e una battuta, anche quando il problema sei tu.</p>
+        <p>È quello che, se lo cerchi, un consiglio o un abbraccio (metaforico, è pur sempre un preside) te lo trova sempre.</p>
+        <p>È fiero della sua Castellammare come pochi, si emoziona ancora per un assolo di sax, e sciogliersi lo vedi solo quando parla di due persone: sua moglie Nicoletta e suo figlio Claudio — simpatico e sveglio come il padre, e forse anche di più.</p>
+        <p>Lascia un vuoto nei corridoi, nelle riunioni interminabili rese sopportabili solo dalle sue battute, nei caffè al volo tra un'ora e l'altra.</p>
+        <p>Ma quello che lascia davvero, quello resta: il ricordo di un collega diventato amico, e la certezza che ovunque vada, porterà la stessa umanità che ha regalato a noi.</p>
+        <p class="lead-line">Buona strada, Pasquale.<br>Buona strada, Preside.</p>
+        <p>Che la Forza — e Castellammare — siano sempre con te.</p>
+        <p style="margin-top:1rem;font-size:1.15rem;letter-spacing:.05em;">Alberto, Anna Lisa, Emanuela, Giorgio,<br>Giuliana, Max, Paola, Salvatore</p>
       </div>
     </div>
   </div>
@@ -133,51 +141,52 @@ body{font-family:'Inter',system-ui,sans-serif;}
   <div class="text-crawl-fade-bottom"></div>
   <div id="textCrawlControls">
     <button onclick="toggleTextCrawl()" id="textPauseBtn">⏸ Pausa</button>
-    <button onclick="setTextSpeed(150)">Normale</button>
-    <button onclick="setTextSpeed(70)">Veloce</button>
+    <button onclick="setTextSpeed(220)">Normale</button>
+    <button onclick="setTextSpeed(100)">Veloce</button>
   </div>
 </section>
 
 <section class="crawl-stage" id="crawlStage">
+  <canvas id="hyperPhotoCanvas"></canvas>
   <div class="stars"></div>
   <div class="stars2"></div>
   <div class="crawl-heading">Tanti anni, tanti ricordi</div>
   <div class="crawl-viewport">
     <div class="crawl-track">
       <div class="crawl-photos" id="crawlPhotos">
-        <figure><img class="crawl-photo" src="foto01.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto02.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto03.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto04.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto05.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto06.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto07.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto08.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto09.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto10.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><video class="crawl-photo" src="clip1.mp4" autoplay muted loop playsinline></video></figure>
-        <figure><img class="crawl-photo" src="foto11.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto12.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto13.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto14.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto15.png" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto16.png" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto17.png" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto18.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto19.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto20.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><video class="crawl-photo" src="clip2.mp4" autoplay muted loop playsinline></video></figure>
-        <figure><img class="crawl-photo" src="foto21.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto22.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto23.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto24.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto25.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto26.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto27.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto28.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto29.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto30.png" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="foto31.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="1.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="2.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="3.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="4.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="5.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="6.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="7.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="8.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="9.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="10.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><video class="crawl-photo" src="30.mp4" autoplay muted loop playsinline></video></figure>
+        <figure><img class="crawl-photo" src="11.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="12.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="13.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="14.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="15.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="16.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="17.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="18.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="19.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="20.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><video class="crawl-photo" src="31.mp4" autoplay muted loop playsinline></video></figure>
+        <figure><img class="crawl-photo" src="21.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="22.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="23.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="24.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="25.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="26.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="27.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="28.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="29.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="31.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="32.png" alt="Un momento con Pasquale" loading="lazy"></figure>
       </div>
     </div>
   </div>
@@ -185,8 +194,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
   <div class="crawl-fade-bottom"></div>
   <div id="crawlControls">
     <button onclick="toggleCrawl()" id="pauseBtn">⏸ Pausa</button>
-    <button onclick="setSpeed(260)">Normale</button>
-    <button onclick="setSpeed(120)">Veloce</button>
+    <button onclick="setSpeed(340)">Normale</button>
+    <button onclick="setSpeed(160)">Veloce</button>
   </div>
 </section>
 
@@ -195,7 +204,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
     <div class="flex flex-col md:flex-row justify-between gap-6 items-start">
       <div>
         <div class="font-bold text-white text-base mb-1">Istituto di Istruzione Superiore &quot;Gregorio Mendel&quot;</div>
-        <div class="text-sm">Via Ferrazzi, 15 — 20020 Villa Cortese (MI)</div>
+        <div class="text-sm">Via Ferrazzi, 15 — 20035 Villa Cortese (MI)</div>
         <a href="https://agrariomendel.edu.it/" class="text-sm text-mendel-300 hover:underline inline-flex items-center gap-1 mt-2">agrariomendel.edu.it</a>
       </div>
       <div class="text-xs text-white/60 md:text-right">Pagina creata da Team Digitale<br>per l'IIS Mendel di Villa Cortese (MI)</div>
@@ -231,6 +240,68 @@ function toggleTextCrawl(){
 }
 function setTextSpeed(sec){
   document.getElementById('textCrawlBody').style.animationDuration = sec + 's';
+}
+
+/* --- Effetto iperspazio (stelle che sfrecciano verso lo spettatore) --- */
+function initHyperspace(canvasId, starColor){
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, cx, cy;
+  let stars = [];
+  const STAR_COUNT = 400;
+
+  function resize(){
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+    cx = w/2; cy = h/2;
+  }
+  function makeStar(){
+    return {
+      x: (Math.random()-0.5) * w,
+      y: (Math.random()-0.5) * h,
+      z: Math.random() * w,
+      pz: 0
+    };
+  }
+  function init(){
+    resize();
+    stars = [];
+    for(let i=0;i<STAR_COUNT;i++){ const s = makeStar(); s.z = Math.random()*w; s.pz = s.z; stars.push(s); }
+  }
+  function frame(){
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle = starColor;
+    ctx.lineWidth = 1.5;
+    for(let s of stars){
+      s.pz = s.z;
+      s.z -= 9;
+      if(s.z < 1){
+        s.x = (Math.random()-0.5) * w;
+        s.y = (Math.random()-0.5) * h;
+        s.z = w;
+        s.pz = s.z;
+      }
+      const sx = (s.x / s.z) * w + cx;
+      const sy = (s.y / s.z) * w + cy;
+      const px = (s.x / s.pz) * w + cx;
+      const py = (s.y / s.pz) * w + cy;
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(sx, sy);
+      ctx.stroke();
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener('resize', resize);
+  init();
+  requestAnimationFrame(frame);
+}
+
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  initHyperspace('hyperTextCanvas', 'rgba(255,214,10,0.55)');
+  initHyperspace('hyperPhotoCanvas', 'rgba(200,255,200,0.55)');
 }
 </script>
 
