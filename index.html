@@ -58,6 +58,10 @@ body{font-family:'Inter',system-ui,sans-serif;}
 @keyframes crawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-3300vh);}}
 .crawl-photo{width:min(78vw,720px);border-radius:10px;border:3px solid rgba(76,175,80,.55);box-shadow:0 0 40px rgba(76,175,80,.25);display:block;}
 
+.crawl-wish{color:#4caf50;text-align:center;font-weight:700;max-width:min(65vw,680px);}
+.crawl-wish p{font-size:1.7rem;line-height:1.6;margin-bottom:1.4rem;text-shadow:0 0 12px rgba(76,175,80,.6);}
+.crawl-wish .crawl-wish-signature{font-size:2.1rem;margin-top:.6rem;}
+
 .crawl-heading{position:absolute;top:7%;left:0;right:0;z-index:4;text-align:center;color:#4caf50;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.95rem;text-shadow:0 0 14px rgba(76,175,80,.7);}
 
 /* --- text crawl (Guerre Stellari, giallo) --- */
@@ -145,6 +149,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
     <button onclick="toggleTextCrawl()" id="textPauseBtn">⏸ Pausa</button>
     <button onclick="setTextSpeed(220)">Normale</button>
     <button onclick="setTextSpeed(100)">Veloce</button>
+    <button onclick="restartTextCrawl()">↻ Ricomincia</button>
   </div>
 </section>
 
@@ -189,6 +194,12 @@ body{font-family:'Inter',system-ui,sans-serif;}
         <figure><img class="crawl-photo" src="29.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
         <figure><img class="crawl-photo" src="31.png" alt="Un momento con Pasquale" loading="lazy"></figure>
         <figure><img class="crawl-photo" src="32.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <div class="crawl-wish">
+          <p>E allora, Pasquale...</p>
+          <p>che il tuo nuovo cammino sia pieno di soddisfazioni quante ne hai regalate a noi.</p>
+          <p>Che tu possa essere, ovunque sarai, quel Preside giusto e umano che sappiamo che sei.</p>
+          <p class="crawl-wish-signature">Con affetto,<br>tutti noi del Mendel</p>
+        </div>
       </div>
     </div>
   </div>
@@ -198,6 +209,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
     <button onclick="toggleCrawl()" id="pauseBtn">⏸ Pausa</button>
     <button onclick="setSpeed(480)">Normale</button>
     <button onclick="setSpeed(220)">Veloce</button>
+    <button onclick="restartCrawl()">↻ Ricomincia</button>
   </div>
 </section>
 
@@ -209,7 +221,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
         <div class="text-sm">Via Ferrazzi, 15 — 20035 Villa Cortese (MI)</div>
         <a href="https://agrariomendel.edu.it/" class="text-sm text-mendel-300 hover:underline inline-flex items-center gap-1 mt-2">agrariomendel.edu.it</a>
       </div>
-      <div class="text-xs text-white/60 md:text-right">Pagina creata da Team Digitale<br>per l'IIS Mendel di Villa Cortese (MI)</div>
+      <div class="text-xs text-white/60 md:text-right">Pagina creata con affetto da Max<br>per l'IIS Mendel di Villa Cortese (MI)</div>
     </div>
   </div>
 </footer>
@@ -275,12 +287,14 @@ function setTextSpeed(sec){
   document.getElementById('textCrawlBody').style.animationDuration = sec + 's';
 }
 
-/* --- Avvia i crawl solo quando lo spettatore ci arriva scorrendo --- */
+/* --- Avvia i crawl solo quando lo spettatore ci arriva scorrendo (con una breve pausa iniziale, come nei titoli di testa) --- */
 const textCrawlObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if(entry.isIntersecting && !textRunning){
       textRunning = true;
-      document.getElementById('textCrawlBody').style.animationPlayState = 'running';
+      setTimeout(() => {
+        document.getElementById('textCrawlBody').style.animationPlayState = 'running';
+      }, 2500);
       textCrawlObserver.unobserve(entry.target);
     }
   });
@@ -298,6 +312,28 @@ const photoCrawlObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.35 });
 photoCrawlObserver.observe(document.getElementById('crawlStage'));
+
+/* --- Ricomincia da capo --- */
+function restartTextCrawl(){
+  const el = document.getElementById('textCrawlBody');
+  el.style.animation = 'none';
+  el.offsetHeight; /* forza il reflow */
+  el.style.animation = '';
+  el.style.animationPlayState = 'paused';
+  textRunning = false;
+  document.getElementById('textPauseBtn').textContent = '⏸ Pausa';
+  textRunning = true;
+  setTimeout(() => { el.style.animationPlayState = 'running'; }, 1200);
+}
+function restartCrawl(){
+  const el = document.getElementById('crawlPhotos');
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = '';
+  el.style.animationPlayState = 'running';
+  running = true;
+  document.getElementById('pauseBtn').textContent = '⏸ Pausa';
+}
 
 /* --- Effetto iperspazio (stelle che sfrecciano verso lo spettatore) --- */
 function initHyperspace(canvasId, starColor){
