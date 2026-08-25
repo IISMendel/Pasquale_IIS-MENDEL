@@ -79,13 +79,6 @@ body{font-family:'Inter',system-ui,sans-serif;}
 
 .crawl-heading{position:absolute;top:7%;left:0;right:0;z-index:4;text-align:center;color:#4caf50;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.95rem;text-shadow:0 0 14px rgba(76,175,80,.7);}
 
-/* --- titolo iniziale stile Guerre Stellari --- */
-.title-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;}
-.title-crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:450px;z-index:2;}
-.title-crawl-track{transform-style:preserve-3d;transform:rotateX(35deg);}
-.title-crawl-text{font-family:'StarJediLocal',sans-serif;color:#ffd60a;text-align:center;letter-spacing:.05em;font-size:clamp(3rem,10vw,7rem);line-height:1.1;text-shadow:0 0 25px rgba(255,214,10,.6);}
-#hyperTitleCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block;}
-
 /* --- text crawl (Guerre Stellari, giallo) --- */
 .text-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;}
 .text-crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:450px;perspective-origin:50% 100%;z-index:2;}
@@ -93,6 +86,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
 .text-crawl-body{display:flex;flex-direction:column;align-items:center;gap:2.2rem;animation:textCrawlUp 220s linear infinite;animation-delay:2.5s;color:#ffd60a;text-align:center;font-weight:700;will-change:transform;animation-play-state:paused;}
 .text-crawl-body p{font-size:2.1rem;line-height:1.65;text-shadow:0 0 10px rgba(255,214,10,.35);max-width:760px;}
 .text-crawl-body p.lead-line{font-size:2.7rem;}
+.text-crawl-body p.title-in-crawl{font-family:'StarJediLocal',sans-serif;font-size:clamp(2.6rem,8vw,5rem);line-height:1.15;letter-spacing:.05em;margin-bottom:1rem;}
 @keyframes textCrawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-1500vh);}}
 .text-crawl-fade-top{position:absolute;top:0;left:0;right:0;height:22%;background:linear-gradient(to bottom,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
 .text-crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:8%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
@@ -134,20 +128,12 @@ body{font-family:'Inter',system-ui,sans-serif;}
   </div>
 </header>
 
-<section class="title-crawl-stage" id="titleCrawlStage">
-  <canvas id="hyperTitleCanvas"></canvas>
-  <div class="title-crawl-viewport">
-    <div class="title-crawl-track">
-      <h2 class="title-crawl-text">PASQUALE<br>'0 PRESiDE</h2>
-    </div>
-  </div>
-</section>
-
 <section class="text-crawl-stage" id="textCrawlStage">
   <canvas id="hyperTextCanvas"></canvas>
   <div class="text-crawl-viewport">
     <div class="text-crawl-track">
       <div class="text-crawl-body" id="textCrawlBody">
+        <p class="lead-line title-in-crawl">PASQUALE<br>'0 PRESiDE</p>
         <p class="lead-line">In una scuola lontana lontana,<br>in quel di Villa Cortese...</p>
         <p>...un fiero stabiese approdò tra i banchi del Mendel, portando con sé PV, Estimo, e un amore sconfinato per il jazz.</p>
         <p>Il suo nome: Pasquale Donnarumma.</p>
@@ -479,7 +465,6 @@ function initHyperspace(canvasId, starColor){
 }
 
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-  initHyperspace('hyperTitleCanvas', 'rgba(255,214,10,0.55)');
   initHyperspace('hyperTextCanvas', 'rgba(255,214,10,0.55)');
   initHyperspace('hyperPhotoCanvas', 'rgba(200,255,200,0.55)');
 }
