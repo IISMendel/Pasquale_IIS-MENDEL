@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Un saluto a Pasquale — IIS Gregorio Mendel</title>
 <meta name="description" content="Un saluto e un ringraziamento a Pasquale, per anni docente e amico del Mendel, che dalla prossima settimana diventa Preside altrove.">
+<meta name="theme-color" content="#123c16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { theme: { extend: {
@@ -16,35 +20,49 @@ tailwind.config = { theme: { extend: {
 } } }
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 @font-face {
   font-family: 'StarJediLocal';
   src: url('star-jedi.ttf') format('truetype');
   font-display: swap;
 }
-body{font-family:'Inter',system-ui,sans-serif;}
+body{font-family:'Inter',system-ui,sans-serif;text-wrap:pretty;}
 :focus-visible{outline:3px solid #4caf50;outline-offset:2px;}
+a{color:#2e7d32;}
+a:hover{color:#1b5e20;}
 
+/* ---------- controlli fissi ---------- */
 #backToTop{position:fixed;bottom:24px;right:24px;z-index:50;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;}
 #backToTop.show{opacity:1;pointer-events:auto;}
 #musicPanel{position:fixed;bottom:24px;left:24px;z-index:50;}
 #musicButtons{display:flex;gap:6px;}
-#musicToggle{background:#1b5e20;color:#fff;border:none;width:48px;height:48px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;opacity:1;transition:opacity .3s ease,transform .2s ease;}
-#musicToggle:hover{transform:scale(1.08);}
-#musicListToggle{background:#1b5e20;color:#fff;border:none;width:32px;height:48px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:.95rem;cursor:pointer;transition:transform .2s ease,background .2s ease;}
+#musicToggle{background:#1b5e20;color:#fff;border:none;width:48px;height:48px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:transform .2s ease,background .2s ease;}
+#musicToggle:hover{transform:scale(1.08);background:#2e7d32;}
+#musicListToggle{background:#1b5e20;color:#fff;border:none;width:32px;height:48px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:.95rem;cursor:pointer;transition:transform .2s ease,background .2s ease;}
 #musicListToggle:hover{background:#2e7d32;transform:scale(1.08);}
-#musicMenu{position:absolute;bottom:58px;left:0;background:#123c16;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.4);min-width:240px;display:flex;flex-direction:column;gap:6px;}
+#musicMenu{position:absolute;bottom:58px;left:0;background:rgba(18,60,22,.96);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px;box-shadow:0 12px 32px rgba(0,0,0,.45);min-width:250px;display:flex;flex-direction:column;gap:6px;}
 #musicMenu.hidden{display:none;}
 .music-menu-title{color:rgba(255,255,255,.6);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 6px 4px;}
-.track-btn{background:transparent;border:1px solid transparent;color:#e8f5e9;font-size:.82rem;text-align:left;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .15s;}
+.track-btn{background:transparent;border:1px solid transparent;color:#e8f5e9;font-size:.82rem;text-align:left;padding:9px 10px;border-radius:9px;cursor:pointer;transition:background .15s;}
 .track-btn:hover{background:rgba(255,255,255,.08);}
 .track-btn.active{background:rgba(76,175,80,.25);border-color:rgba(76,175,80,.5);font-weight:700;}
 
+.stage-controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:6px;border-radius:999px;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);max-width:calc(100vw - 180px);opacity:0;pointer-events:none;transition:opacity .3s ease;}
+.stage-controls.show{opacity:1;pointer-events:auto;}
+.stage-controls button{background:transparent;border:1px solid transparent;font-size:.78rem;font-weight:700;padding:8px 15px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;white-space:nowrap;}
+#textCrawlControls button{color:#ffe066;}
+#textCrawlControls button:hover,#textCrawlControls button[aria-pressed="true"]{background:rgba(255,214,10,.18);border-color:rgba(255,214,10,.55);color:#fff;}
+#crawlControls button{color:#a5d6a7;}
+#crawlControls button:hover,#crawlControls button[aria-pressed="true"]{background:rgba(76,175,80,.22);border-color:rgba(76,175,80,.55);color:#fff;}
+@media (max-width:700px){
+  .stage-controls{bottom:88px;max-width:calc(100vw - 32px);}
+}
+
+/* ---------- crawl foto (verde) ---------- */
 .crawl-stage{
   position:relative;
   background:#000 radial-gradient(ellipse at 50% 15%, #06170a 0%, #000 70%);
   overflow:hidden;
-  height:100vh;
+  height:100vh;height:100svh;
 }
 .stars, .stars2{
   position:absolute;inset:0;
@@ -64,64 +82,69 @@ body{font-family:'Inter',system-ui,sans-serif;}
 .stars2{background-size:400px 300px;opacity:.4;animation-duration:100s;animation-direction:reverse;}
 @keyframes drift{from{background-position:0 0;}to{background-position:1000px 1000px;}}
 
-.crawl-fade-top{position:absolute;top:0;left:0;right:0;height:20%;background:linear-gradient(to bottom,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
-.crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:10%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
+.stage-vignette{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,.75) 100%);}
+.crawl-fade-top{position:absolute;top:0;left:0;right:0;height:20%;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.6) 45%,transparent 100%);z-index:3;pointer-events:none;}
+.crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:12%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
 
 .crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:500px;perspective-origin:50% 100%;z-index:2;}
 .crawl-track{position:relative;width:min(70vw,860px);transform-style:preserve-3d;transform:rotateX(25deg);}
 .crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 620s linear infinite;will-change:transform;animation-play-state:paused;}
 @keyframes crawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-4300vh);}}
-.crawl-photo{width:min(78vw,720px);border-radius:10px;border:3px solid rgba(76,175,80,.55);box-shadow:0 0 40px rgba(76,175,80,.25);display:block;}
+.crawl-photo{width:min(78vw,720px);border-radius:12px;border:1px solid rgba(165,214,167,.45);box-shadow:0 0 0 4px rgba(0,0,0,.5),0 0 60px rgba(76,175,80,.28);display:block;}
 
-.crawl-wish{color:#4caf50;text-align:center;font-weight:700;max-width:min(65vw,680px);}
-.crawl-wish p{font-size:1.7rem;line-height:1.6;margin-bottom:1.4rem;text-shadow:0 0 12px rgba(76,175,80,.6);}
-.crawl-wish .crawl-wish-signature{font-size:2.1rem;margin-top:.6rem;}
+.crawl-wish{color:#a5d6a7;text-align:center;font-weight:700;max-width:min(65vw,680px);}
+.crawl-wish p{font-size:1.7rem;line-height:1.6;margin-bottom:1.4rem;text-shadow:0 0 14px rgba(76,175,80,.5);}
+.crawl-wish .crawl-wish-signature{font-size:2.1rem;margin-top:.6rem;color:#e8f5e9;}
 
-#crawlFinalMessage{position:fixed;top:50%;left:0;right:0;transform:translateY(-50%);z-index:35;text-align:center;color:#4caf50;font-weight:800;opacity:0;pointer-events:none;transition:opacity 1.2s ease;}
+#crawlFinalMessage{position:fixed;top:50%;left:0;right:0;transform:translateY(-50%);z-index:35;text-align:center;color:#c8e6c9;font-weight:800;opacity:0;pointer-events:none;transition:opacity 1.2s ease;padding:0 6vw;}
 #crawlFinalMessage.show{opacity:1;}
-#crawlFinalMessage p{text-shadow:0 0 18px rgba(76,175,80,.7);margin:0;}
-#crawlFinalMessage p:first-child{font-size:1.3rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;}
-#crawlFinalMessage .crawl-final-goodbye{font-size:3rem;letter-spacing:.05em;}
+#crawlFinalMessage p{text-shadow:0 0 24px rgba(76,175,80,.7);margin:0;}
+#crawlFinalMessage p:first-child{font-size:1rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:1rem;color:#81c784;}
+#crawlFinalMessage .crawl-final-goodbye{font-size:clamp(2.2rem,7vw,3.4rem);letter-spacing:.04em;color:#fff;}
 
-.crawl-heading{position:absolute;top:7%;left:0;right:0;z-index:4;text-align:center;color:#4caf50;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.95rem;text-shadow:0 0 14px rgba(76,175,80,.7);}
-
-/* --- text crawl (Guerre Stellari, giallo) --- */
-.text-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;}
+/* ---------- crawl testo (giallo) ---------- */
+.text-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;height:100svh;}
 .text-crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:450px;perspective-origin:50% 100%;z-index:2;}
 .text-crawl-track{position:relative;width:min(70vw,780px);transform-style:preserve-3d;transform:rotateX(25deg);}
 .text-crawl-body{display:flex;flex-direction:column;align-items:center;gap:2.2rem;animation:textCrawlUp 220s linear infinite;animation-delay:2.5s;color:#ffd60a;text-align:center;font-weight:700;will-change:transform;animation-play-state:paused;}
-.text-crawl-body p{font-size:2.1rem;line-height:1.65;text-shadow:0 0 10px rgba(255,214,10,.35);max-width:760px;}
+.text-crawl-body p{font-size:2.1rem;line-height:1.65;text-shadow:0 0 14px rgba(255,214,10,.3);max-width:760px;}
 .text-crawl-body p.lead-line{font-size:2.7rem;}
-.text-crawl-body p.title-in-crawl{font-family:'StarJediLocal',sans-serif;font-size:clamp(2.6rem,8vw,5rem);line-height:1.15;letter-spacing:.05em;margin-bottom:1rem;}
+.text-crawl-body p.title-in-crawl{font-family:'StarJediLocal','Inter',sans-serif;font-size:clamp(2.6rem,8vw,5rem);line-height:1.15;letter-spacing:.05em;margin-bottom:1rem;}
+.text-crawl-body p.crawl-signature{margin-top:1rem;font-size:1.15rem;letter-spacing:.06em;color:#ffe9a3;}
 @keyframes textCrawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-1500vh);}}
-.text-crawl-fade-top{position:absolute;top:0;left:0;right:0;height:22%;background:linear-gradient(to bottom,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
-.text-crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:8%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
-#textCrawlControls{position:fixed;bottom:24px;left:0;right:0;z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 10px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
-#textCrawlControls.show{opacity:1;pointer-events:auto;}
-#textCrawlControls button{background:#123c16;border:1px solid rgba(255,214,10,.6);color:#ffe066;font-size:.8rem;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s;box-shadow:0 4px 14px rgba(0,0,0,.4);}
-#textCrawlControls button:hover{background:rgba(255,214,10,.25);color:#fff;}
+.text-crawl-fade-top{position:absolute;top:0;left:0;right:0;height:24%;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 50%,transparent 100%);z-index:3;pointer-events:none;}
+.text-crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:10%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
+
 #hyperTextCanvas, #hyperPhotoCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block;}
-@media (prefers-reduced-motion: reduce){
-  .text-crawl-body{animation:none;position:static;padding:10vh 4vw;}
-  .text-crawl-track{transform:none;}
-  #hyperTextCanvas, #hyperPhotoCanvas{display:none;}
+
+.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:5;color:rgba(255,255,255,.55);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:6px;animation:hintBob 2.4s ease-in-out infinite;}
+@keyframes hintBob{0%,100%{transform:translate(-50%,0);opacity:.5;}50%{transform:translate(-50%,6px);opacity:1;}}
+
+@media (max-width:640px){
+  .text-crawl-body p{font-size:1.35rem;}
+  .text-crawl-body p.lead-line{font-size:1.7rem;}
+  .crawl-wish p{font-size:1.2rem;}
+  .crawl-wish .crawl-wish-signature{font-size:1.5rem;}
+  .crawl-photos{gap:70px;}
 }
 
-#crawlControls{position:fixed;bottom:24px;left:0;right:0;z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 10px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
-#crawlControls.show{opacity:1;pointer-events:auto;}
-#crawlControls button{background:#123c16;border:1px solid rgba(76,175,80,.6);color:#a5d6a7;font-size:.8rem;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s;box-shadow:0 4px 14px rgba(0,0,0,.4);}
-#crawlControls button:hover{background:rgba(76,175,80,.3);color:#fff;}
-
+/* ---------- accessibilità: nessuna animazione ---------- */
 @media (prefers-reduced-motion: reduce){
-  .crawl-photos{animation:none;position:static;display:grid;gap:32px;padding:10vh 0;}
-  .crawl-track{transform:none;}
+  .crawl-stage,.text-crawl-stage{height:auto;overflow:visible;}
+  .crawl-viewport,.text-crawl-viewport{position:static;perspective:none;display:block;}
+  .crawl-track,.text-crawl-track{transform:none;width:100%;max-width:860px;margin:0 auto;padding:6vh 4vw;}
+  .crawl-photos,.text-crawl-body{animation:none;gap:40px;}
+  .crawl-fade-top,.crawl-fade-bottom,.text-crawl-fade-top,.text-crawl-fade-bottom,.stage-vignette,.scroll-hint{display:none;}
   .stars,.stars2{animation:none;}
+  #hyperTextCanvas, #hyperPhotoCanvas{display:none;}
+  .stage-controls{display:none;}
+  #crawlFinalMessage{position:static;transform:none;opacity:1;padding:6vh 4vw;}
 }
 </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
 
-<header class="bg-gradient-to-br from-mendel-800 to-mendel-900 text-white">
+<header class="bg-gradient-to-br from-mendel-800 to-mendel-900 text-white border-b-2 border-mendel-400/40">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
     <div class="flex items-center gap-4">
       <img src="logo-mendel.png" alt="Logo IIS Gregorio Mendel" class="w-14 h-14 rounded-full bg-white p-0.5 shrink-0 object-contain"
@@ -135,7 +158,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
 </header>
 
 <section class="text-crawl-stage" id="textCrawlStage">
-  <canvas id="hyperTextCanvas"></canvas>
+  <canvas id="hyperTextCanvas" aria-hidden="true"></canvas>
   <div class="text-crawl-viewport">
     <div class="text-crawl-track">
       <div class="text-crawl-body" id="textCrawlBody">
@@ -153,24 +176,26 @@ body{font-family:'Inter',system-ui,sans-serif;}
         <p>Ma quello che lascia davvero, quello resta: il ricordo di un collega diventato amico, e la certezza che ovunque vada, porterà la stessa umanità che ha regalato a noi.</p>
         <p class="lead-line">Buona strada, Pasquale.<br>Buona strada, Preside.</p>
         <p>Che la Forza — e Castellammare — siano sempre con te.</p>
-        <p style="margin-top:1rem;font-size:1.15rem;letter-spacing:.05em;">Alberto, Anna Lisa, Emanuela, Giorgio,<br>Giuliana, Max, Paola, Salvatore</p>
+        <p class="crawl-signature">Alberto, Anna Lisa, Emanuela, Giorgio,<br>Giuliana, Max, Paola, Salvatore</p>
       </div>
     </div>
   </div>
   <div class="text-crawl-fade-top"></div>
   <div class="text-crawl-fade-bottom"></div>
-  <div id="textCrawlControls">
-    <button onclick="toggleTextCrawl()" id="textPauseBtn">⏸ Pausa</button>
-    <button onclick="setTextSpeed(220)">Normale</button>
-    <button onclick="setTextSpeed(100)">Veloce</button>
-    <button onclick="restartTextCrawl()">↻ Ricomincia</button>
+  <div class="scroll-hint" aria-hidden="true"><span>continua sotto</span><span>↓</span></div>
+  <div id="textCrawlControls" class="stage-controls" role="group" aria-label="Controlli testo">
+    <button type="button" id="textPauseBtn" onclick="toggleTextCrawl()">⏸ Pausa</button>
+    <button type="button" data-speed="220" aria-pressed="true" onclick="setTextSpeed(220,this)">Normale</button>
+    <button type="button" data-speed="100" aria-pressed="false" onclick="setTextSpeed(100,this)">Veloce</button>
+    <button type="button" onclick="restartTextCrawl()">↻ Ricomincia</button>
   </div>
 </section>
 
-<section class="bg-black py-10 px-4">
+<section class="bg-black py-12 px-4">
   <div class="max-w-4xl mx-auto">
-    <div class="aspect-video w-full rounded-xl overflow-hidden shadow-2xl border border-white/10">
-      <video class="w-full h-full" id="mainVideo" controls playsinline>
+    <div class="text-center text-[11px] uppercase tracking-[.24em] text-mendel-300 font-semibold mb-5">Il video per Pasquale</div>
+    <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl ring-1 ring-mendel-400/25">
+      <video class="w-full h-full" id="mainVideo" controls playsinline preload="metadata">
         <source src="video.mp4" type="video/mp4">
         Il tuo browser non supporta la riproduzione video.
       </video>
@@ -179,15 +204,15 @@ body{font-family:'Inter',system-ui,sans-serif;}
 </section>
 
 <section class="crawl-stage" id="crawlStage">
-  <canvas id="hyperPhotoCanvas"></canvas>
-  <div class="stars"></div>
-  <div class="stars2"></div>
+  <canvas id="hyperPhotoCanvas" aria-hidden="true"></canvas>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="stars2" aria-hidden="true"></div>
   <div class="crawl-viewport">
     <div class="crawl-track">
       <div class="crawl-photos" id="crawlPhotos">
-        <figure><img class="crawl-photo" src="1.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="2.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
-        <figure><img class="crawl-photo" src="3.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="1.jpeg" alt="Un momento con Pasquale"></figure>
+        <figure><img class="crawl-photo" src="2.jpeg" alt="Un momento con Pasquale"></figure>
+        <figure><img class="crawl-photo" src="3.jpeg" alt="Un momento con Pasquale"></figure>
         <figure><img class="crawl-photo" src="4.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
         <figure><img class="crawl-photo" src="5.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
         <figure><img class="crawl-photo" src="6.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
@@ -243,27 +268,28 @@ body{font-family:'Inter',system-ui,sans-serif;}
       </div>
     </div>
   </div>
+  <div class="stage-vignette"></div>
   <div class="crawl-fade-top"></div>
   <div class="crawl-fade-bottom"></div>
   <div id="crawlFinalMessage">
     <p>Tanti anni, tanti ricordi</p>
     <p class="crawl-final-goodbye">Ciao Pasquale</p>
   </div>
-  <div id="crawlControls">
-    <button onclick="toggleCrawl()" id="pauseBtn">⏸ Pausa</button>
-    <button onclick="setSpeed(620)">Normale</button>
-    <button onclick="setSpeed(280)">Veloce</button>
-    <button onclick="restartCrawl()">↻ Ricomincia</button>
+  <div id="crawlControls" class="stage-controls" role="group" aria-label="Controlli foto">
+    <button type="button" id="pauseBtn" onclick="toggleCrawl()">⏸ Pausa</button>
+    <button type="button" data-speed="620" aria-pressed="true" onclick="setSpeed(620,this)">Normale</button>
+    <button type="button" data-speed="280" aria-pressed="false" onclick="setSpeed(280,this)">Veloce</button>
+    <button type="button" onclick="restartCrawl()">↻ Ricomincia</button>
   </div>
 </section>
 
-<footer class="bg-mendel-900 text-white/80">
+<footer class="bg-mendel-900 text-white/80 border-t-2 border-mendel-400/40">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex flex-col md:flex-row justify-between gap-6 items-start">
       <div>
         <div class="font-bold text-white text-base mb-1">Istituto di Istruzione Superiore &quot;Gregorio Mendel&quot;</div>
         <div class="text-sm">Via Ferrazzi, 15 — 20035 Villa Cortese (MI)</div>
-        <a href="https://agrariomendel.edu.it/" class="text-sm text-mendel-300 hover:underline inline-flex items-center gap-1 mt-2">agrariomendel.edu.it</a>
+        <a href="https://agrariomendel.edu.it/" class="text-sm !text-mendel-300 hover:underline inline-flex items-center gap-1 mt-2">agrariomendel.edu.it</a>
       </div>
       <div class="text-xs text-white/60 md:text-right">Pagina creata con affetto da Max<br>per l'IIS Mendel di Villa Cortese (MI)</div>
     </div>
@@ -276,214 +302,227 @@ body{font-family:'Inter',system-ui,sans-serif;}
 
 <div id="musicPanel">
   <div id="musicButtons">
-    <button id="musicToggle" onclick="togglePlayPause()" aria-label="Riproduci/Pausa musica">🔇</button>
-    <button id="musicListToggle" onclick="toggleMusicMenu()" aria-label="Scegli canzone">▾</button>
+    <button type="button" id="musicToggle" onclick="togglePlayPause()" aria-label="Riproduci o metti in pausa la musica">🔇</button>
+    <button type="button" id="musicListToggle" onclick="toggleMusicMenu()" aria-label="Scegli la canzone" aria-expanded="false">▾</button>
   </div>
   <div id="musicMenu" class="hidden">
     <div class="music-menu-title">Scegli la musica</div>
-    <button onclick="selectTrack('musica.mp3', this)" class="track-btn active">🎤 Pasquà, 'o Preside (gospel-blues)</button>
-    <button onclick="selectTrack('pasquale-remastered.mp3', this)" class="track-btn">🎤 Pasquà, 'o Preside (trap)</button>
-    <button onclick="selectTrack('blue-in-the-rain.mp3', this)" class="track-btn">🎷 Blue in the Rain (jazz)</button>
-    <button onclick="selectTrack('midnight-groove.mp3', this)" class="track-btn">🎹 Midnight Groove (fusion)</button>
+    <button type="button" onclick="selectTrack('musica.mp3', this)" class="track-btn active">🎤 Pasquà, 'o Preside (gospel-blues)</button>
+    <button type="button" onclick="selectTrack('pasquale-remastered.mp3', this)" class="track-btn">🎤 Pasquà, 'o Preside (trap)</button>
+    <button type="button" onclick="selectTrack('blue-in-the-rain.mp3', this)" class="track-btn">🎷 Blue in the Rain (jazz)</button>
+    <button type="button" onclick="selectTrack('midnight-groove.mp3', this)" class="track-btn">🎹 Midnight Groove (fusion)</button>
   </div>
 </div>
 
-<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su" class="bg-mendel-700 hover:bg-mendel-800 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold">↑</button>
-<script>
-window.addEventListener('scroll', () => {
-  document.getElementById('backToTop').classList.toggle('show', window.scrollY > 400);
-});
+<button type="button" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su" class="bg-mendel-700 hover:bg-mendel-800 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold">↑</button>
 
-/* --- Musica di sottofondo (con playlist selezionabile) --- */
+<script>
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* --- back to top (throttled con rAF) --- */
+(function(){
+  const btn = document.getElementById('backToTop');
+  let queued = false;
+  window.addEventListener('scroll', () => {
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(() => { btn.classList.toggle('show', window.scrollY > 400); queued = false; });
+  }, {passive:true});
+})();
+
+/* --- Musica di sottofondo (playlist selezionabile, con fade-in) --- */
 const bgMusic = document.getElementById('bgMusic');
 const musicBtn = document.getElementById('musicToggle');
 const musicMenu = document.getElementById('musicMenu');
+const musicListToggle = document.getElementById('musicListToggle');
 const mainVideo = document.getElementById('mainVideo');
 let musicStarted = false;
 let currentTrack = 'musica.mp3';
 
+function fadeIn(){
+  bgMusic.volume = 0;
+  const step = () => {
+    if(bgMusic.paused) return;
+    bgMusic.volume = Math.min(1, bgMusic.volume + 0.04);
+    if(bgMusic.volume < 1) setTimeout(step, 60);
+  };
+  step();
+}
+function playMusic(){
+  return bgMusic.play().then(() => {
+    musicBtn.textContent = '🔊';
+    musicStarted = true;
+    fadeIn();
+  }).catch(() => { musicBtn.textContent = '🔇'; });
+}
 function togglePlayPause(){
-  if(bgMusic.paused){
-    bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; musicStarted = true; }).catch(()=>{});
-  } else {
-    bgMusic.pause();
-    musicBtn.textContent = '🔇';
-  }
+  if(bgMusic.paused){ playMusic(); }
+  else { bgMusic.pause(); musicBtn.textContent = '🔇'; }
 }
 function toggleMusicMenu(){
-  musicMenu.classList.toggle('hidden');
+  const open = musicMenu.classList.toggle('hidden') === false;
+  musicListToggle.setAttribute('aria-expanded', String(open));
 }
+function closeMusicMenu(){
+  musicMenu.classList.add('hidden');
+  musicListToggle.setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('click', (e) => {
+  if(!document.getElementById('musicPanel').contains(e.target)) closeMusicMenu();
+});
+document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMusicMenu(); });
+
 function selectTrack(src, btnEl){
   document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
   btnEl.classList.add('active');
-  const wasPlaying = !bgMusic.paused;
   if(currentTrack === src){
-    if(bgMusic.paused){ bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; }); }
-    else { bgMusic.pause(); musicBtn.textContent = '🔇'; }
+    togglePlayPause();
     return;
   }
+  const wasPlaying = !bgMusic.paused || musicStarted;
   currentTrack = src;
   bgMusic.querySelector('source').src = src;
   bgMusic.load();
-  if(wasPlaying || musicStarted){
-    bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; musicStarted = true; }).catch(()=>{ musicBtn.textContent = '🔇'; });
+  if(wasPlaying) playMusic();
+}
+if(mainVideo){
+  mainVideo.addEventListener('ended', () => { if(!musicStarted) playMusic(); });
+  /* la musica non si sovrappone al video */
+  mainVideo.addEventListener('play', () => { if(!bgMusic.paused){ bgMusic.pause(); musicBtn.textContent = '🔇'; } });
+}
+
+/* --- Motore comune dei due crawl --- */
+function makeCrawl(bodyId, stageId, controlsId, pauseBtnId, defaultDuration){
+  const el = document.getElementById(bodyId);
+  const stage = document.getElementById(stageId);
+  const controls = document.getElementById(controlsId);
+  const pauseBtn = document.getElementById(pauseBtnId);
+  let running = false;
+  let duration = defaultDuration;
+
+  function apply(){ el.style.animationDuration = duration + 's'; }
+  function setRunning(v){
+    running = v;
+    el.style.animationPlayState = v ? 'running' : 'paused';
+    pauseBtn.textContent = v ? '⏸ Pausa' : '▶ Riprendi';
   }
-}
-mainVideo.addEventListener('ended', () => {
-  if(!musicStarted){
-    musicStarted = true;
-    bgMusic.play().then(()=>{ musicBtn.textContent = '🔊'; }).catch(()=>{ musicBtn.textContent = '🔇'; });
+  const api = {
+    toggle(){ setRunning(!running); },
+    setSpeed(sec, btnEl){
+      duration = sec;
+      apply();
+      if(btnEl){
+        controls.querySelectorAll('[data-speed]').forEach(b => b.setAttribute('aria-pressed', String(b === btnEl)));
+      }
+    },
+    restart(){
+      el.style.animation = 'none';
+      void el.offsetHeight;
+      el.style.animation = '';
+      apply();                 /* la velocità scelta non viene più perduta */
+      setRunning(true);
+    }
+  };
+  apply();
+
+  if(!REDUCED){
+    /* parte da sola all'ingresso, si mette in pausa quando la sezione esce dallo schermo */
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        controls.classList.toggle('show', entry.isIntersecting);
+        if(entry.isIntersecting){ if(!running) setRunning(true); }
+        else if(running){ el.style.animationPlayState = 'paused'; running = false; pauseBtn.textContent = '▶ Riprendi'; }
+      });
+    }, { threshold: 0.2 }).observe(stage);
   }
-});
-
-/* --- Crawl foto (verde) --- */
-let running = false;
-function toggleCrawl(){
-  const el = document.getElementById('crawlPhotos');
-  const btn = document.getElementById('pauseBtn');
-  running = !running;
-  el.style.animationPlayState = running ? 'running' : 'paused';
-  btn.textContent = running ? '⏸ Pausa' : '▶ Riprendi';
+  return api;
 }
-function setSpeed(sec){
-  document.getElementById('crawlPhotos').style.animationDuration = sec + 's';
-}
-function restartCrawl(){
-  const el = document.getElementById('crawlPhotos');
-  el.style.animation = 'none';
-  el.offsetHeight;
-  el.style.animation = '';
-  el.style.animationPlayState = 'running';
-  running = true;
-  document.getElementById('pauseBtn').textContent = '⏸ Pausa';
-}
-const photoCrawlObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting && !running){
-      running = true;
-      document.getElementById('crawlPhotos').style.animationPlayState = 'running';
-      document.getElementById('pauseBtn').textContent = '⏸ Pausa';
-      photoCrawlObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.35 });
-photoCrawlObserver.observe(document.getElementById('crawlStage'));
 
-/* --- Crawl testo (giallo): parte da sola quando si arriva alla sezione scorrendo --- */
-let textRunning = false;
-function toggleTextCrawl(){
-  const el = document.getElementById('textCrawlBody');
-  const btn = document.getElementById('textPauseBtn');
-  textRunning = !textRunning;
-  el.style.animationPlayState = textRunning ? 'running' : 'paused';
-  btn.textContent = textRunning ? '⏸ Pausa' : '▶ Riprendi';
+const photoCrawl = makeCrawl('crawlPhotos','crawlStage','crawlControls','pauseBtn',620);
+const textCrawl  = makeCrawl('textCrawlBody','textCrawlStage','textCrawlControls','textPauseBtn',220);
+
+function toggleCrawl(){ photoCrawl.toggle(); }
+function setSpeed(s, b){ photoCrawl.setSpeed(s, b); }
+function restartCrawl(){ photoCrawl.restart(); }
+function toggleTextCrawl(){ textCrawl.toggle(); }
+function setTextSpeed(s, b){ textCrawl.setSpeed(s, b); }
+function restartTextCrawl(){ textCrawl.restart(); }
+
+/* --- Scritta finale --- */
+if(!REDUCED){
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      document.getElementById('crawlFinalMessage').classList.toggle('show', entry.isIntersecting);
+    });
+  }, { threshold: 0.4 }).observe(document.getElementById('lastWishBlock'));
 }
-function setTextSpeed(sec){
-  document.getElementById('textCrawlBody').style.animationDuration = sec + 's';
-}
-function restartTextCrawl(){
-  const el = document.getElementById('textCrawlBody');
-  el.style.animation = 'none';
-  el.offsetHeight;
-  el.style.animation = '';
-  el.style.animationPlayState = 'running';
-  textRunning = true;
-  document.getElementById('textPauseBtn').textContent = '⏸ Pausa';
-}
-const textCrawlObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting && !textRunning){
-      textRunning = true;
-      document.getElementById('textCrawlBody').style.animationPlayState = 'running';
-      document.getElementById('textPauseBtn').textContent = '⏸ Pausa';
-      textCrawlObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.35 });
-textCrawlObserver.observe(document.getElementById('textCrawlStage'));
 
-/* --- Mostra/nasconde i controlli fissi in base a quale sezione è a schermo --- */
-const textControlsVisibility = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    document.getElementById('textCrawlControls').classList.toggle('show', entry.isIntersecting);
-  });
-}, { threshold: 0.05 });
-textControlsVisibility.observe(document.getElementById('textCrawlStage'));
-
-const photoControlsVisibility = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    document.getElementById('crawlControls').classList.toggle('show', entry.isIntersecting);
-  });
-}, { threshold: 0.05 });
-photoControlsVisibility.observe(document.getElementById('crawlStage'));
-
-/* --- Mostra la scritta finale fissa quando si arriva all'ultimo blocco di auguri --- */
-const finalMessageObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    document.getElementById('crawlFinalMessage').classList.toggle('show', entry.isIntersecting);
-  });
-}, { threshold: 0.4 });
-finalMessageObserver.observe(document.getElementById('lastWishBlock'));
-
-/* --- Effetto iperspazio (stelle che sfrecciano verso lo spettatore) --- */
+/* --- Effetto iperspazio: si ferma quando la sezione non è a schermo --- */
 function initHyperspace(canvasId, starColor){
   const canvas = document.getElementById(canvasId);
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
-  let w, h, cx, cy;
-  let stars = [];
-  const STAR_COUNT = 500;
+  const STAR_COUNT = 380;
+  let w = 0, h = 0, cx = 0, cy = 0, stars = [], visible = false, rafId = null;
 
   function resize(){
-    const rect = canvas.parentElement.getBoundingClientRect();
-    w = canvas.width = Math.max(1, Math.round(rect.width));
-    h = canvas.height = Math.max(1, Math.round(rect.height));
-    cx = w/2; cy = h/2;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.getBoundingClientRect();
+    w = Math.max(1, Math.round(rect.width));
+    h = Math.max(1, Math.round(rect.height));
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = w / 2; cy = h / 2;
   }
-  function makeStar(){
-    return { x:(Math.random()-0.5)*w, y:(Math.random()-0.5)*h, z: Math.random()*w, pz:0 };
-  }
-  function init(){
-    resize();
+  function seed(){
     stars = [];
-    for(let i=0;i<STAR_COUNT;i++){ const s = makeStar(); s.pz = s.z; stars.push(s); }
+    for(let i = 0; i < STAR_COUNT; i++){
+      const s = { x:(Math.random()-0.5)*w, y:(Math.random()-0.5)*h, z: Math.random()*w };
+      s.pz = s.z;
+      stars.push(s);
+    }
   }
   function frame(){
-    if(canvas.parentElement.getBoundingClientRect().width !== w || canvas.parentElement.getBoundingClientRect().height !== h){
-      resize();
-    }
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    ctx.fillRect(0,0,w,h);
+    ctx.fillRect(0, 0, w, h);
     ctx.strokeStyle = starColor;
-    ctx.lineWidth = 1.5;
-    for(let s of stars){
+    ctx.lineWidth = 1.4;
+    for(const s of stars){
       s.pz = s.z;
       s.z -= 9;
       if(s.z < 1){
         s.x = (Math.random()-0.5) * w;
         s.y = (Math.random()-0.5) * h;
-        s.z = w;
-        s.pz = s.z;
+        s.z = w; s.pz = s.z;
       }
-      const sx = (s.x / s.z) * w + cx;
-      const sy = (s.y / s.z) * w + cy;
-      const px = (s.x / s.pz) * w + cx;
-      const py = (s.y / s.pz) * w + cy;
+      const sx = (s.x / s.z) * w + cx, sy = (s.y / s.z) * w + cy;
+      const px = (s.x / s.pz) * w + cx, py = (s.y / s.pz) * w + cy;
       ctx.beginPath();
       ctx.moveTo(px, py);
       ctx.lineTo(sx, sy);
       ctx.stroke();
     }
-    requestAnimationFrame(frame);
+    rafId = requestAnimationFrame(frame);
   }
-  window.addEventListener('resize', resize);
-  setTimeout(init, 50);
-  requestAnimationFrame(frame);
+  function start(){ if(rafId === null){ rafId = requestAnimationFrame(frame); } }
+  function stop(){ if(rafId !== null){ cancelAnimationFrame(rafId); rafId = null; } }
+
+  new ResizeObserver(() => { resize(); if(!stars.length || w) seed(); }).observe(canvas);
+  new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting;
+    visible ? start() : stop();
+  }, { threshold: 0.01 }).observe(canvas);
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : (visible && start());
+  });
+  resize();
+  seed();
 }
 
-if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+if(!REDUCED){
   initHyperspace('hyperTextCanvas', 'rgba(255,214,10,0.55)');
-  initHyperspace('hyperPhotoCanvas', 'rgba(200,255,200,0.55)');
+  initHyperspace('hyperPhotoCanvas', 'rgba(200,255,200,0.5)');
 }
 </script>
 
