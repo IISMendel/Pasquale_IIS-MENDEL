@@ -77,6 +77,12 @@ body{font-family:'Inter',system-ui,sans-serif;}
 .crawl-wish p{font-size:1.7rem;line-height:1.6;margin-bottom:1.4rem;text-shadow:0 0 12px rgba(76,175,80,.6);}
 .crawl-wish .crawl-wish-signature{font-size:2.1rem;margin-top:.6rem;}
 
+#crawlFinalMessage{position:fixed;top:50%;left:0;right:0;transform:translateY(-50%);z-index:35;text-align:center;color:#4caf50;font-weight:800;opacity:0;pointer-events:none;transition:opacity 1.2s ease;}
+#crawlFinalMessage.show{opacity:1;}
+#crawlFinalMessage p{text-shadow:0 0 18px rgba(76,175,80,.7);margin:0;}
+#crawlFinalMessage p:first-child{font-size:1.3rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;}
+#crawlFinalMessage .crawl-final-goodbye{font-size:3rem;letter-spacing:.05em;}
+
 .crawl-heading{position:absolute;top:7%;left:0;right:0;z-index:4;text-align:center;color:#4caf50;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.95rem;text-shadow:0 0 14px rgba(76,175,80,.7);}
 
 /* --- text crawl (Guerre Stellari, giallo) --- */
@@ -176,7 +182,6 @@ body{font-family:'Inter',system-ui,sans-serif;}
   <canvas id="hyperPhotoCanvas"></canvas>
   <div class="stars"></div>
   <div class="stars2"></div>
-  <div class="crawl-heading">Tanti anni, tanti ricordi</div>
   <div class="crawl-viewport">
     <div class="crawl-track">
       <div class="crawl-photos" id="crawlPhotos">
@@ -230,7 +235,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
           <p>Che tu possa essere, ovunque sarai, quel Preside giusto e umano che sappiamo che sei.</p>
           <p class="crawl-wish-signature">Con affetto,<br>tutti noi del Mendel</p>
         </div>
-        <div class="crawl-wish">
+        <div class="crawl-wish" id="lastWishBlock">
           <p>E se un giorno, tra una riunione e l'altra della tua nuova scuola, ti mancherà una battuta detta al momento giusto...</p>
           <p>...ricordati che qui, al Mendel, la porta è rimasta aperta. Sempre.</p>
           <p class="crawl-wish-signature">A presto, Preside.</p>
@@ -240,6 +245,10 @@ body{font-family:'Inter',system-ui,sans-serif;}
   </div>
   <div class="crawl-fade-top"></div>
   <div class="crawl-fade-bottom"></div>
+  <div id="crawlFinalMessage">
+    <p>Tanti anni, tanti ricordi</p>
+    <p class="crawl-final-goodbye">Ciao Pasquale</p>
+  </div>
   <div id="crawlControls">
     <button onclick="toggleCrawl()" id="pauseBtn">⏸ Pausa</button>
     <button onclick="setSpeed(620)">Normale</button>
@@ -407,6 +416,14 @@ const photoControlsVisibility = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.05 });
 photoControlsVisibility.observe(document.getElementById('crawlStage'));
+
+/* --- Mostra la scritta finale fissa quando si arriva all'ultimo blocco di auguri --- */
+const finalMessageObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    document.getElementById('crawlFinalMessage').classList.toggle('show', entry.isIntersecting);
+  });
+}, { threshold: 0.4 });
+finalMessageObserver.observe(document.getElementById('lastWishBlock'));
 
 /* --- Effetto iperspazio (stelle che sfrecciano verso lo spettatore) --- */
 function initHyperspace(canvasId, starColor){
