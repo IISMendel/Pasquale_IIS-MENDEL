@@ -69,8 +69,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
 
 .crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:500px;perspective-origin:50% 100%;z-index:2;}
 .crawl-track{position:relative;width:min(70vw,860px);transform-style:preserve-3d;transform:rotateX(25deg);}
-.crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 480s linear infinite;will-change:transform;animation-play-state:paused;}
-@keyframes crawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-3300vh);}}
+.crawl-photos{display:flex;flex-direction:column;align-items:center;gap:110px;animation:crawlUp 620s linear infinite;will-change:transform;animation-play-state:paused;}
+@keyframes crawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-4300vh);}}
 .crawl-photo{width:min(78vw,720px);border-radius:10px;border:3px solid rgba(76,175,80,.55);box-shadow:0 0 40px rgba(76,175,80,.25);display:block;}
 
 .crawl-wish{color:#4caf50;text-align:center;font-weight:700;max-width:min(65vw,680px);}
@@ -80,7 +80,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
 .crawl-heading{position:absolute;top:7%;left:0;right:0;z-index:4;text-align:center;color:#4caf50;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-size:.95rem;text-shadow:0 0 14px rgba(76,175,80,.7);}
 
 /* --- titolo iniziale stile Guerre Stellari --- */
-.title-crawl-stage{position:relative;background:#000;overflow:hidden;height:70vh;}
+.title-crawl-stage{position:relative;background:#000;overflow:hidden;height:100vh;}
 .title-crawl-viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:450px;z-index:2;}
 .title-crawl-track{transform-style:preserve-3d;transform:rotateX(35deg);}
 .title-crawl-text{font-family:'StarJediLocal',sans-serif;color:#ffd60a;text-align:center;letter-spacing:.05em;text-transform:uppercase;font-size:clamp(3rem,10vw,7rem);line-height:1.1;text-shadow:0 0 25px rgba(255,214,10,.6);}
@@ -96,7 +96,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
 @keyframes textCrawlUp{0%{transform:translateY(130vh);}100%{transform:translateY(-1500vh);}}
 .text-crawl-fade-top{position:absolute;top:0;left:0;right:0;height:22%;background:linear-gradient(to bottom,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
 .text-crawl-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:8%;background:linear-gradient(to top,#000 0%,transparent 100%);z-index:3;pointer-events:none;}
-#textCrawlControls{position:fixed;bottom:24px;left:0;right:0;z-index:40;display:flex;justify-content:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+#textCrawlControls{position:fixed;bottom:24px;left:0;right:0;z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 10px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
 #textCrawlControls.show{opacity:1;pointer-events:auto;}
 #textCrawlControls button{background:#123c16;border:1px solid rgba(255,214,10,.6);color:#ffe066;font-size:.8rem;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s;box-shadow:0 4px 14px rgba(0,0,0,.4);}
 #textCrawlControls button:hover{background:rgba(255,214,10,.25);color:#fff;}
@@ -107,7 +107,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
   #hyperTextCanvas, #hyperPhotoCanvas{display:none;}
 }
 
-#crawlControls{position:fixed;bottom:24px;left:0;right:0;z-index:40;display:flex;justify-content:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+#crawlControls{position:fixed;bottom:24px;left:0;right:0;z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 10px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
 #crawlControls.show{opacity:1;pointer-events:auto;}
 #crawlControls button{background:#123c16;border:1px solid rgba(76,175,80,.6);color:#a5d6a7;font-size:.8rem;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .2s;box-shadow:0 4px 14px rgba(0,0,0,.4);}
 #crawlControls button:hover{background:rgba(76,175,80,.3);color:#fff;}
@@ -227,6 +227,17 @@ body{font-family:'Inter',system-ui,sans-serif;}
         <figure><img class="crawl-photo" src="29.jpeg" alt="Un momento con Pasquale" loading="lazy"></figure>
         <figure><img class="crawl-photo" src="31.png" alt="Un momento con Pasquale" loading="lazy"></figure>
         <figure><img class="crawl-photo" src="32.png" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="33.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="34.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><video class="crawl-photo" src="clip3.mp4" autoplay muted loop playsinline></video></figure>
+        <figure><img class="crawl-photo" src="35.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="36.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="37.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="38.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="39.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="40.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="41.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
+        <figure><img class="crawl-photo" src="42.jpg" alt="Un momento con Pasquale" loading="lazy"></figure>
         <div class="crawl-wish">
           <p>E allora, Pasquale...</p>
           <p>che il tuo nuovo cammino sia pieno di soddisfazioni quante ne hai regalate a noi.</p>
@@ -245,8 +256,8 @@ body{font-family:'Inter',system-ui,sans-serif;}
   <div class="crawl-fade-bottom"></div>
   <div id="crawlControls">
     <button onclick="toggleCrawl()" id="pauseBtn">⏸ Pausa</button>
-    <button onclick="setSpeed(480)">Normale</button>
-    <button onclick="setSpeed(220)">Veloce</button>
+    <button onclick="setSpeed(620)">Normale</button>
+    <button onclick="setSpeed(280)">Veloce</button>
     <button onclick="restartCrawl()">↻ Ricomincia</button>
   </div>
 </section>
@@ -259,7 +270,7 @@ body{font-family:'Inter',system-ui,sans-serif;}
         <div class="text-sm">Via Ferrazzi, 15 — 20035 Villa Cortese (MI)</div>
         <a href="https://agrariomendel.edu.it/" class="text-sm text-mendel-300 hover:underline inline-flex items-center gap-1 mt-2">agrariomendel.edu.it</a>
       </div>
-      <div class="text-xs text-white/60 md:text-right">Pagina creata con affetto da Max<br>per Pasquale</div>
+      <div class="text-xs text-white/60 md:text-right">Pagina creata con affetto da Max<br>per l'IIS Mendel di Villa Cortese (MI)</div>
     </div>
   </div>
 </footer>
